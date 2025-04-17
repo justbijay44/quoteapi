@@ -1,3 +1,4 @@
 from django.contrib import admin
+from quoteapi.quote.models import Quote
 
-# Register your models here.
+admin.site.register(Quote)
