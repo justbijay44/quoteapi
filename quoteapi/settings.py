@@ -27,6 +27,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'quoteapi.urls'
 
 TEMPLATES = [

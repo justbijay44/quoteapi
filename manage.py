@@ -2,14 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from quoteapi.settings import base
 
 def main():
     """Run administrative tasks."""
-    if base.DEBUG:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quoteapi.settings.local')
-    else:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quoteapi.settings.production')
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', os.getenv('DJANGO_SETTINGS_MODULE', 'quoteapi.settings.base'))
 
     try:
         from django.core.management import execute_from_command_line
