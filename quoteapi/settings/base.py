@@ -1,6 +1,8 @@
 import os
-from pathlib import Path
+import dj_database_url
 import environ
+
+from pathlib import Path
 from datetime import timedelta
 from django.conf import settings
 
@@ -12,6 +14,7 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env')) 
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
+# print("DJANGO_SECRET_KEY:", env('DJANGO_SECRET_KEY', default='NOT SET'))
 
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
@@ -72,11 +75,17 @@ WSGI_APPLICATION = 'quoteapi.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=env('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
+        conn_max_age=600
+    )
 }
+
+# Static files for production
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -141,9 +150,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
