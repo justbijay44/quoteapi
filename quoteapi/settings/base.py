@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # Third party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
     # Local apps
     'quoteapi.quote',
 ]
@@ -52,6 +53,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 ROOT_URLCONF = 'quoteapi.urls'
@@ -149,10 +151,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [BASE_DIR / "static"]
-# STATIC_ROOT = BASE_DIR / "staticfiles"
-
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Quote API',
+    'DESCRIPTION': 'A Quote for the Day',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

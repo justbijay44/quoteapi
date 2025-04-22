@@ -9,6 +9,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 from quoteapi.quote.views import (QuoteViewSet, PublicQuoteList, RegisterView)
 
 router = DefaultRouter()
@@ -22,6 +24,9 @@ urlpatterns = [
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # login
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # refresh
+
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='docs'),
 ]
 
 if settings.DEBUG:
